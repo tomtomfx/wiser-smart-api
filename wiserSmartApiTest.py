@@ -2,6 +2,7 @@ from wiserSmartAPI import wiserSmart
 import logging
 import json
 import time
+import datetime
 
 _LOGGER = logging.getLogger(__name__)
 _LOGGER.setLevel(logging.DEBUG)
@@ -67,19 +68,25 @@ try:
         print("\tActive: {}".format(appliance.get("state")))
         print("\tPower consumption: {}".format(appliance.get("powerConsump")))
 
-# Other Examples
-# Setting HOME Mode , change to AWAY for away mode
-#    wh.setHomeAwayMode("HOME")
-#    wh.setHomeAwayMode("AWAY",10)
-# Set room 4 TRVs to off, which is -200
-#    print( wh.getRoom(4).get("Name"))
-#    wh.setRoomMode(4,"off")
-# Set room 4 TRVs to manual, setting normal scheduled temp
-#    wh.setRoomMode(4,"manual")
-# Set temperature of room 4 to 13C
-#    wh.setRoomTemperature(4,10)
-# Set TRV off in room 4 to Off
-#    wh.setRoomTemperature(4,-20)
-
+# Set Machine à laver off
+    print("--------------------------------")
+    print("Set data tests")
+    print("--------------------------------")
+    
+    # print('Set "Machines à laver" off')
+    # ws.setWiserApplianceState("Machines à laver", False)
+    
+    # time.sleep(5)
+    
+    # print('Set mode') # manual, schedule, energysaver, holiday
+    #comeBackTime = int(datetime.datetime(2020,4,18,15,0).timestamp())
+    # comeBackTime = None
+    # ws.setWiserHomeMode("schedule", "schedule", comeBackTime)
+    
+    # time.sleep(5)
+    
+    print('Room Temp')
+    ws.setWiserRoomTemp("Chambre bas", 11.3)
+    
 except json.decoder.JSONDecodeError as ex:
     print("JSON Exception")

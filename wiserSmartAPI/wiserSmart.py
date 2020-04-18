@@ -32,13 +32,23 @@ WISERSMARTSYSTEM = "http://{}/rpc/diagnostic/get_properties"
 WISERSMARTROOMS = "http://{}/rpc/devicegroup/get_groups"
 WISERSMARTGETSCHEDULE = "http://{}/rpc/schedule/get_schedule"
 
+"""
+Wiser Smart modes
+"""
+NORMAL = "manual"
+SCHEDULED = "schedule"
+ENERGYSAVER = "energysaver"
+HOLIDAY = "holiday"
+"""
+Temperatures boundaries
+"""
 TEMP_MINIMUM = 0.5
 TEMP_MAXIMUM = 35
 TEMP_OFF = -20
 
 TIMEOUT = 5
 
-__VERSION__ = "1.0.0"
+__VERSION__ = "1.0.1"
 
 """
 Exception Handlers
@@ -193,6 +203,14 @@ class wiserSmart:
         self.checkControllerData() # trigger a data refresh if necessary
         return self.wiserHomeMode.get("homeMode")
 
+    def setWiserHomeMode(self, hcMode, homeMode, comeBackTime):
+        self.checkControllerData() # trigger a data refresh if necessary
+        antiFreeze = False
+        if (homeMode == "holiday"): 
+            antiFreeze = True
+        homeModeData = {"hcMode":hcMode,"homeMode":homeMode,"antiFreeze":antiFreeze,"endTime":comeBackTime}
+        self.sendPostRequest(WISERSMARTSETMODE, homeModeData)
+
     def getWiserRooms(self):
         self.checkControllerData() # trigger a data refresh if necessary
         return self.wiserRoomsList
@@ -203,6 +221,16 @@ class wiserSmart:
             if roomTemp.get("locationName") == roomName:
                 return roomTemp
         return None
+    
+    def setWiserRoomTemp(self, roomName, temp):
+        self.checkControllerData() # trigger a data refresh if necessary
+        # Check temp is between boundaries
+        if (temp < TEMP_MINIMUM):
+            temp = TEMP_MINIMUM
+        if (temp > TEMP_MAXIMUM):
+            temp = TEMP_MAXIMUM
+        roomData = {"targetTemp":[{"locationId":roomName,"targetValue":temp}]}
+        self.sendPostRequest(WISERSMARTSETTEMP, roomData)
 
     def getWiserDevices(self):
         self.checkControllerData() # trigger a data refresh if necessary
@@ -225,3 +253,10 @@ class wiserSmart:
             if appliance.get("applianceName") == applianceName:
                 return appliance
         return None
+
+    def setWiserApplianceState(self, applianceName, state):
+        self.checkControllerData() # trigger a data refresh if necessary
+        for appliance in self.wiserAppliancesData.get("applianceDetails"):
+            if appliance.get("applianceName") == applianceName:
+                applianceData = {"applianceState":[{"applianceId":appliance.get("applianceId"), "state":state}]}
+                self.sendPostRequest(WISERSMARTSETAPPLIANCESTATE, applianceData)

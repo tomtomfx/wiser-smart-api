@@ -5,10 +5,11 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wiser-smart-api",
-    version="1.0.0",
+    version="1.0.1",
+    license='MIT',
     author="Thomas Fayoux",
     author_email="thomas.fayoux@gmail.com",
-    description="A simple API for accessing data on the Schneider Wiser Smart system",
+    description="A simple API for accessing data on the Schneider Wiser Smart system (The white cross)",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/tomtomfx/wiser-smart-api",
