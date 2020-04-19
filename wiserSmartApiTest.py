@@ -85,8 +85,8 @@ try:
     
     # time.sleep(5)
     
-    print('Room Temp')
-    ws.setWiserRoomTemp("Chambre bas", 11.3)
+    # print('Room Temp')
+    # ws.setWiserRoomTemp("Chambre bas", 11.3)
     
 except json.decoder.JSONDecodeError as ex:
     print("JSON Exception")

@@ -15,6 +15,7 @@ import requests
 import json
 import os
 import re
+from base64 import b64encode
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,7 +49,7 @@ TEMP_OFF = -20
 
 TIMEOUT = 5
 
-__VERSION__ = "1.0.1"
+__VERSION__ = "1.0.2"
 
 """
 Exception Handlers
@@ -92,12 +93,14 @@ class wiserSmart:
         self.wiserDevicesData = None
         self.wiserRoomsList = []
         self.wiserIP = wiserIP
-        self.wiserUser = wiserUser
-        self.wiserPassword = wiserPassword
+        login = ("{}:{}".format(wiserUser, wiserPassword)).encode()
+        self.auth = b64encode(login)
+        print(self.auth)
         self.headers = {
             "Content-Type": "application/json;charset=UTF-8",
-            "Authorization": "Basic YWRtaW46YWRtaW4=",
+            "Authorization": "Basic {}".format(self.auth.decode()),
         }
+        print (self.headers)
         # Dict holding Radiator2Room mapping convinience variable
         self.refreshData()  # Issue first refresh in init
 
