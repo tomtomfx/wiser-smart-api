@@ -99,7 +99,6 @@ class wiserSmart:
             "Content-Type": "application/json;charset=UTF-8",
             "Authorization": "Basic {}".format(self.auth.decode()),
         }
-        # Dict holding Radiator2Room mapping convinience variable
         self.refreshData()  # Issue first refresh in init
 
     def __checkTempRange(self, temp):
