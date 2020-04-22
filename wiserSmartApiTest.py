@@ -1,4 +1,4 @@
-from wiserSmartAPI import wiserSmart
+from wiserSmartAPI.wiserSmart import wiserSmart
 import logging
 import json
 import time
@@ -29,7 +29,7 @@ print("Wiser Smart IP: {} , Wiser Smart User: {}, Wiser Smart Password: {}".form
 
 
 try:
-    ws = wiserSmart.wiserSmart(wiserSmartIP, wiserSmartUser, wiserSmartPassword)
+    ws = wiserSmart(wiserSmartIP, wiserSmartUser, wiserSmartPassword)
 
     print("-------------------------------")
     print("System status")

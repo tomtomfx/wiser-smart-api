@@ -49,7 +49,7 @@ TEMP_OFF = -20
 
 TIMEOUT = 5
 
-__VERSION__ = "1.0.2"
+__VERSION__ = "1.0.3"
 
 """
 Exception Handlers
@@ -95,12 +95,10 @@ class wiserSmart:
         self.wiserIP = wiserIP
         login = ("{}:{}".format(wiserUser, wiserPassword)).encode()
         self.auth = b64encode(login)
-        print(self.auth)
         self.headers = {
             "Content-Type": "application/json;charset=UTF-8",
             "Authorization": "Basic {}".format(self.auth.decode()),
         }
-        print (self.headers)
         # Dict holding Radiator2Room mapping convinience variable
         self.refreshData()  # Issue first refresh in init
 
