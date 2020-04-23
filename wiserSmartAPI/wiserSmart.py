@@ -161,31 +161,38 @@ class wiserSmart:
         Forces a refresh of data from the wiser Controller
         return: JSON Data
         """
-
         _LOGGER.info("Updating Wiser Smart Controller Data")
         emptyBody = {}
-        
         # System data
         systemData = {"propertyNames":["ehc.gw.host.name","ehc.wcs2.cloud.status","ehc.version.macaddress"]}        
         self.wiserControllerData = self.sendPostRequest(WISERSMARTSYSTEM, systemData)
-
+        if (self.wiserControllerData = None):
+            return false
         # Get home mode
         self.wiserHomeMode = self.sendPostRequest(WISERSMARTGETMODE, emptyBody)
-
+        if (self.wiserHomeMode = None):
+            return false
         # Get rooms
         roomsInfos = self.sendPostRequest(WISERSMARTROOMS, emptyBody)
+        if (self.roomsInfos = None):
+            return false
         for room in roomsInfos.get("groupDetails"):
             if room.get("visible") == True:
                 self.wiserRoomsList.append(room.get("name"))
-
         # Get devices
         self.wiserDevicesData = self.sendPostRequest(WISERSMARTDEVICELIST, emptyBody)
-
+        if (self.wiserDevicesData = None):
+            return false
         # Get Temperatures
         self.wiserTemperaturesData = self.sendPostRequest(WISERSMARTTEMPLIST, emptyBody)
-
+        if (self.wiserTemperaturesData = None):
+            return false
         # Get appliances
         self.wiserAppliancesData = self.sendPostRequest(WISERSMARTAPPLIANCELIST, emptyBody)
+        if (self.wiserAppliancesData = None):
+            return false
+            
+        return True
         
     def getWiserControllerName(self):
         self.checkControllerData()
