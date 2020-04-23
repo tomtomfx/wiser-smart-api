@@ -166,30 +166,30 @@ class wiserSmart:
         # System data
         systemData = {"propertyNames":["ehc.gw.host.name","ehc.wcs2.cloud.status","ehc.version.macaddress"]}        
         self.wiserControllerData = self.sendPostRequest(WISERSMARTSYSTEM, systemData)
-        if (self.wiserControllerData = None):
+        if (self.wiserControllerData == None):
             return false
         # Get home mode
         self.wiserHomeMode = self.sendPostRequest(WISERSMARTGETMODE, emptyBody)
-        if (self.wiserHomeMode = None):
+        if (self.wiserHomeMode == None):
             return false
         # Get rooms
         roomsInfos = self.sendPostRequest(WISERSMARTROOMS, emptyBody)
-        if (self.roomsInfos = None):
+        if (roomsInfos == None):
             return false
         for room in roomsInfos.get("groupDetails"):
             if room.get("visible") == True:
                 self.wiserRoomsList.append(room.get("name"))
         # Get devices
         self.wiserDevicesData = self.sendPostRequest(WISERSMARTDEVICELIST, emptyBody)
-        if (self.wiserDevicesData = None):
+        if (self.wiserDevicesData == None):
             return false
         # Get Temperatures
         self.wiserTemperaturesData = self.sendPostRequest(WISERSMARTTEMPLIST, emptyBody)
-        if (self.wiserTemperaturesData = None):
+        if (self.wiserTemperaturesData == None):
             return false
         # Get appliances
         self.wiserAppliancesData = self.sendPostRequest(WISERSMARTAPPLIANCELIST, emptyBody)
-        if (self.wiserAppliancesData = None):
+        if (self.wiserAppliancesData == None):
             return false
             
         return True
