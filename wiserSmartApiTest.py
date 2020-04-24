@@ -52,7 +52,7 @@ try:
     print("--------------------------------")
     print("Listing all Rooms and their temperature")
     print("--------------------------------")
-    roomList = ws.getWiserRooms()
+    roomList = ws.getWiserRoomsThermostat()
     print ("There are {} rooms in the house".format(len(roomList)))
     for room in roomList:
         print(room)

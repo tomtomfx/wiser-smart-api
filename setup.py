@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wiser-smart-api",
-    version="1.0.5",
+    version="1.0.6",
     license='MIT',
     author="Thomas Fayoux",
     author_email="thomas.fayoux@gmail.com",

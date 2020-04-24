@@ -49,7 +49,7 @@ TEMP_OFF = -20
 
 TIMEOUT = 5
 
-__VERSION__ = "1.0.5"
+__VERSION__ = "1.0.6"
 
 """
 Exception Handlers
@@ -92,6 +92,7 @@ class wiserSmart:
         self.wiserAppliancesData = None
         self.wiserDevicesData = None
         self.wiserRoomsList = []
+        self.wiserThermostatsList = []
         self.wiserIP = wiserIP
         login = ("{}:{}".format(wiserUser, wiserPassword)).encode()
         self.auth = b64encode(login)
@@ -228,7 +229,13 @@ class wiserSmart:
             if roomTemp.get("locationName") == roomName:
                 return roomTemp
         return None
-    
+
+    def getWiserRoomsThermostat(self):
+        self.checkControllerData() # trigger a data refresh if necessary
+        for thermostat in self.wiserTemperaturesData.get("locationTempDetails"):
+            self.wiserThermostatsList.append(thermostat.get("locationName"))
+        return self.wiserThermostatsList
+
     def setWiserRoomTemp(self, roomName, temp):
         self.checkControllerData() # trigger a data refresh if necessary
         # Check temp is between boundaries
